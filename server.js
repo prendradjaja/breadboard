@@ -1,7 +1,8 @@
 'use strict';
 
 var util = require('util'),
-    io = require('socket.io');
+    io = require('socket.io'),
+    Game = require('./game').Game;
 
 var socket, tables;
 
