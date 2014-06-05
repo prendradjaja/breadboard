@@ -1,0 +1,29 @@
+#connecting {
+    font-family: monospace;
+}
+
+#console {
+    display: none;
+}
+
+#console-out {
+    height:12em;
+    width:300px;
+    font-family: monospace;
+    font-size:12px;
+    overflow-y:scroll;
+    border:black solid 1px;
+    padding-left: 1px;
+    -moz-box-sizing: border-box;
+}
+
+#console-in {
+    width:300px;
+    font-family: monospace;
+    font-size:12px;
+    padding:0;
+    padding-left: 1px;
+    margin:0;
+    border:black solid 1px;
+    border-top: none;
+}

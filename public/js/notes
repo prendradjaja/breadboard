@@ -1,0 +1,85 @@
+a game using this framework needs:
+    some game code?
+    some ui code?
+
+class Game:
+    can maintain state in any way it wants, but must have
+    status is WAITING_FOR_0, _1, or SEEKING_OPPONENT. should not actually modify it
+    def __init__() -- initialize to starting state
+    def apply_move(Move) -- returns CONTINUE | WIN | LOSE
+    def is_valid_move(Move)
+    e
+
+class Move:
+    can contain any data it wants, but must have
+    player is 0 or 1
+
+UI code listens to:
+    invalid move
+    your turn
+    opponent turn
+
+UI code sends:
+    make move # received by local framework code FOO
+
+FOO:
+    if valid move and correct player:
+        apply
+        switch players (status)
+        NOTIFY opponent turn or win or lose
+        SEND make_move(move)
+    else:
+        NOTIFY invalid move
+
+client has to know about:
+    game data ??
+    which player i am
+
+server has to know about:
+    tables { -- indexed by table_id as well as client_ids
+        player client ids
+        game data ??
+        seeking_opponent()
+    }
+
+[ ] client:
+    if no table_id (hashtag):
+        player = 0
+        SEND create_table()
+    else:
+        player = 1
+        SEND join_table(table_id)
+
+[ ] server create_table():
+    make_table_id()
+    create table, put in hash table, index by table_id and client_id
+    SEND table_created(table_id)
+
+[ ] client table_created(table_id):
+    redirect
+    NOTIFY waiting_for_opponent
+
+[ ] server join_table(table_id):
+    if table exists and status == SEEKING_OPPONENT: # this is player 2
+        add to hash table
+        status = WAITING_FOR_0
+        SEND to both players: ready()
+    else:
+        todo (deal with nonexistent tables and player 3?)
+
+[ ] client ready():
+    if player == 0:
+        NOTIFY your_turn
+    else:
+        NOTIFY opponent_turn
+
+[ ] server make_move(move):
+    find the table from the client id
+    verify sender is correct player (and game has started) via status
+    verify valid move
+    apply move, which changes status
+    SEND to other player: opponent_move(move)
+
+[ ] client opponent_move(move):
+    apply move
+    NOTIFY your_turn or win or lose
