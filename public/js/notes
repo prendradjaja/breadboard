@@ -1,14 +1,18 @@
 a game using this framework needs:
-    some game code?
+    some game code? -- just a class in a file?
+                       a duplicate file for the server to import, with a "exports.Game = Game;" line?
     some ui code?
 
 class Game:
     can maintain state in any way it wants, but must have
     status is WAITING_FOR_0, _1, or SEEKING_OPPONENT. should not actually modify it
+        SEEKING_OPPONENT = -1
     def __init__() -- initialize to starting state
-    def apply_move(Move) -- returns CONTINUE | WIN | LOSE
+    def apply_move(Move) -- modifies internal state, returns CONTINUE | WIN | LOSE
+        CONTINUE = 0
+        WIN = 1 (the move-maker won)
+        LOSE = 2 (the move-maker lost)
     def is_valid_move(Move)
-    e
 
 class Move:
     can contain any data it wants, but must have
@@ -39,12 +43,12 @@ client has to know about:
 
 server has to know about:
     tables { -- indexed by table_id as well as client_ids
-        player client ids
+        player sockets
         game data ??
         seeking_opponent()
     }
 
-[ ] client:
+[x] client:
     if no table_id (hashtag):
         player = 0
         SEND create_table()
@@ -52,36 +56,38 @@ server has to know about:
         player = 1
         SEND join_table(table_id)
 
-[ ] server create_table():
+[x] server create_table():
     make_table_id()
     create table, put in hash table, index by table_id and client_id
     SEND table_created(table_id)
 
-[ ] client table_created(table_id):
-    redirect
+[x] client table_created(table_id):
+    redirect (do we really need to?)
     NOTIFY waiting_for_opponent
 
-[ ] server join_table(table_id):
+[x] server join_table(table_id):
     if table exists and status == SEEKING_OPPONENT: # this is player 2
-        add to hash table
-        status = WAITING_FOR_0
+        { add myself to the table
+        status = WAITING_FOR_0 } -- Table.start()
+        add my id as a key for that table in the hash table
         SEND to both players: ready()
     else:
         todo (deal with nonexistent tables and player 3?)
 
-[ ] client ready():
+[x] client ready():
     if player == 0:
         NOTIFY your_turn
     else:
         NOTIFY opponent_turn
 
-[ ] server make_move(move):
+[x] server make_move(move):
     find the table from the client id
     verify sender is correct player (and game has started) via status
     verify valid move
-    apply move, which changes status
+    apply move and change status
     SEND to other player: opponent_move(move)
+    todo? deal with invalid moves
 
-[ ] client opponent_move(move):
-    apply move
+[x] client opponent_move(move):
+    apply move and change status
     NOTIFY your_turn or win or lose
