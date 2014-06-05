@@ -16,17 +16,17 @@ function on_connect() {
     game.status = -1;
     var hash_index = window.location.href.indexOf('#');
     if (hash_index === -1) {
-        my_player_number = 0;
+        player = 0;
         socket.emit('create_table');
     } else {
-        my_player_number = 1;
+        player = 1;
         var table_id = window.location.href.substring(hash_index + 1);
         socket.emit('join_table', table_id);
     }
 }
 
 function on_table_created(table_id) {
-    window.location.hash = '#' + room;
+    window.location.hash = '#' + table_id;
     $(window).trigger('waiting_for_opponent');
 }
 

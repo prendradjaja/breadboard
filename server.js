@@ -17,6 +17,13 @@ Table.prototype.start = function (second_player_socket) {
 Table.prototype.current_player = function () {
     return this.players[this.game.status];
 }
+Table.prototype.other_player = function (player_socket) {
+    if (this.players[0].id === player_socket.id) {
+        return this.players[1];
+    } else {
+        return this.players[0];
+    }
+}
 
 function init() {
     tables = {};
@@ -70,7 +77,7 @@ function on_join_table(table_id) {
 
 function on_make_move(move) {
     var table = tables[this.id];
-    if (this.game.status !== -1
+    if (table.game.status !== -1
             && this.id === table.current_player().id
             && table.game.is_valid_move(move)) {
         util.log("Client " + table.current_player().id + " made a move.");
@@ -78,19 +85,19 @@ function on_make_move(move) {
         if (status === 0) {
             table.game.status = 1 - table.game.status;
         } else if (status === 1 || status === 2) {
-            game.status = 2;
+            table.game.status = 2;
         } else {
             // TODO? the user-written Game code is malfunctioning. handle this?
         }
-        table.current_player().emit('opponent_move', move);
+        table.other_player(this).emit('opponent_move', move);
     }
     // TODO? deal with invalid moves
 }
 
-var tables = ["foo", "bar", "canada"];
+var table_names = ["foo", "bar", "canada"];
 
 function make_table_id() {
-    return tables.pop();
+    return table_names.pop();
 }
 
 init();
