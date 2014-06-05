@@ -43,6 +43,7 @@ function on_create_table() {
     var table_id = make_table_id();
     var this_player = this;
     var game = new Game();
+    game.status = -1;
     var new_table = new Table(this_player, game);
     tables[table_id] = new_table;
     tables[this_player.id] = new_table;
@@ -72,8 +73,14 @@ function on_make_move(move) {
             && this.id === table.current_player().id
             && table.game.is_valid_move(move)) {
         util.log("Client " + table.current_player().id + " made a move.");
-        table.game.apply_move(move);
-        table.game.status = 1 - this.game.status;
+        var status = table.game.apply_move(move);
+        if (status === 0) {
+            table.game.status = 1 - table.game.status;
+        } else if (status === 1 || status === 2) {
+            game.status = 2;
+        } else {
+            // TODO? the user-written Game code is malfunctioning. handle this?
+        }
         table.current_player().emit('opponent_move', move);
     }
     // TODO? deal with invalid moves

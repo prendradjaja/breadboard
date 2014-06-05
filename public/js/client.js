@@ -12,6 +12,8 @@ $(function () {
 });
 
 function on_connect() {
+    game = new Game();
+    game.status = -1;
     var hash_index = window.location.href.indexOf('#');
     if (hash_index === -1) {
         my_player_number = 0;
@@ -21,7 +23,6 @@ function on_connect() {
         var table_id = window.location.href.substring(hash_index + 1);
         socket.emit('join_table', table_id);
     }
-    game = new Game();
 }
 
 function on_table_created(table_id) {
@@ -30,21 +31,24 @@ function on_table_created(table_id) {
 }
 
 function on_ready() {
+    game.status = 0;
     if (player === 0) {
         $(window).trigger('your_turn');
     } else {
         $(window).trigger('opponent_turn');
     }
-    // TODO? do i need a which-turn variable? or do these events suffice?
 }
 
 function on_opponent_move(move) {
     var status = game.apply_move(move);
     if (status === 0) {
+        game.status = player;
         $(window).trigger('your_turn');
     } else if (status === 1) {
+        game.status = 2;
         $(window).trigger('lose');
     } else if (status === 2) {
+        game.status = 2;
         $(window).trigger('win');
     } else {
         // TODO? the user-written Game code is malfunctioning. handle this?
@@ -52,15 +56,17 @@ function on_opponent_move(move) {
 }
 
 function on_make_move(event, move) {
-    // TODO? need to check that it's the correct player
-    if (game.is_valid_move(move)) {
+    if (game.status === player && game.is_valid_move(move)) {
         var status = game.apply_move(move);
         socket.emit('make_move', move);
         if (status === 0) {
+            game.status = 1 - player;
             $(window).trigger('opponent_turn');
         } else if (status === 1) {
+            game.status = 2;
             $(window).trigger('win');
         } else if (status === 2) {
+            game.status = 2;
             $(window).trigger('lose');
         } else {
             // TODO? the user-written Game code is malfunctioning. handle this?
