@@ -27,7 +27,7 @@ function on_connect() {
 
 function on_table_created(table_id) {
     window.location.hash = '#' + room;
-    $(window).trigger('waiting_for_opponent')
+    $(window).trigger('waiting_for_opponent');
 }
 
 function on_ready() {
