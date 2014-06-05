@@ -18,6 +18,8 @@ UI code listens to:
     invalid move
     your turn
     opponent turn
+    win
+    lose
 
 UI code sends:
     make move # received by local framework code FOO
