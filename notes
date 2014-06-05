@@ -7,6 +7,8 @@ class Game:
     can maintain state in any way it wants, but must have
     status is WAITING_FOR_0, _1, or SEEKING_OPPONENT. should not actually modify it
         SEEKING_OPPONENT = -1
+        0, 1 are for players
+        2 is for game over
     def __init__() -- initialize to starting state
     def apply_move(Move) -- modifies internal state, returns CONTINUE | WIN | LOSE
         CONTINUE = 0
@@ -19,6 +21,7 @@ class Move:
     player is 0 or 1
 
 UI code listens to:
+    waiting_for_opponent
     invalid move
     your turn
     opponent turn
