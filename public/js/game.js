@@ -11,7 +11,6 @@ Game.prototype.has_win = function(player) {
             if (this.board[row][col] !== player) {
                 break;
             } else if (col === 2) {
-                console_print(1);
                 return true;
             }
         }
@@ -23,7 +22,6 @@ Game.prototype.has_win = function(player) {
             if (this.board[row][col] !== player) {
                 break;
             } else if (row === 2) {
-                console_print(2);
                 return true;
             }
         }
@@ -34,7 +32,6 @@ Game.prototype.has_win = function(player) {
         if (this.board[i][i] !== player) {
             break;
         } else if (i === 2) {
-                console_print(3);
             return true;
         }
     }
@@ -44,7 +41,6 @@ Game.prototype.has_win = function(player) {
         if (this.board[i][i] !== player) {
             break;
         } else if (i === 2) {
-                console_print(4);
             return true;
         }
     }
