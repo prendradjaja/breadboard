@@ -27,7 +27,7 @@ UI code listens to:
     opponent_turn*
     win*
     lose*
-    * these also carry a move with them. when null, it's the start of the game
+    * these also carry a move with them. when 0, it's the start of the game
       when not, you should probably display this move.
 
 UI code sends:
