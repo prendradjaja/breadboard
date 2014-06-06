@@ -14,9 +14,4 @@ Game.prototype.is_valid_move = function (move) {
     return true;
 }
 
-function Move(player, string) {
-    this.player = player;
-    this.string = string;
-}
-
 exports.Game = Game;

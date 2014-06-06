@@ -22,11 +22,13 @@ class Move:
 
 UI code listens to:
     waiting_for_opponent
-    invalid move
-    your turn
-    opponent turn
-    win
-    lose
+    invalid_move
+    your_turn*
+    opponent_turn*
+    win*
+    lose*
+    * these also carry a move with them. when null, it's the start of the game
+      when not, you should probably display this move.
 
 UI code sends:
     make move # received by local framework code FOO

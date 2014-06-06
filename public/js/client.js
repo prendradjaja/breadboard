@@ -33,9 +33,9 @@ function on_table_created(table_id) {
 function on_ready() {
     game.status = 0;
     if (player === 0) {
-        $(window).trigger('your_turn');
+        $(window).trigger('your_turn', 0);
     } else {
-        $(window).trigger('opponent_turn');
+        $(window).trigger('opponent_turn', 0);
     }
 }
 
@@ -43,13 +43,13 @@ function on_opponent_move(move) {
     var status = game.apply_move(move);
     if (status === 0) {
         game.status = player;
-        $(window).trigger('your_turn');
+        $(window).trigger('your_turn', move);
     } else if (status === 1) {
         game.status = 2;
-        $(window).trigger('lose');
+        $(window).trigger('lose', move);
     } else if (status === 2) {
         game.status = 2;
-        $(window).trigger('win');
+        $(window).trigger('win', move);
     } else {
         // TODO? the user-written Game code is malfunctioning. handle this?
     }
@@ -61,13 +61,13 @@ function on_make_move(event, move) {
         socket.emit('make_move', move);
         if (status === 0) {
             game.status = 1 - player;
-            $(window).trigger('opponent_turn');
+            $(window).trigger('opponent_turn', move);
         } else if (status === 1) {
             game.status = 2;
-            $(window).trigger('win');
+            $(window).trigger('win', move);
         } else if (status === 2) {
             game.status = 2;
-            $(window).trigger('lose');
+            $(window).trigger('lose', move);
         } else {
             // TODO? the user-written Game code is malfunctioning. handle this?
         }
