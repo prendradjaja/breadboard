@@ -9,6 +9,7 @@
   overflow-y: scroll;
   border: black solid 1px;
   padding-left: 1px;
+  margin: 0px;
   -moz-box-sizing: border-box; }
 
 #console-in {
