@@ -94,10 +94,12 @@ function on_make_move(move) {
     // TODO? deal with invalid moves
 }
 
-var table_names = ["foo", "bar", "canada"];
+var num_tables = 0;
 
 function make_table_id() {
-    return table_names.pop();
+    var table_id  = 'table' + num_tables;
+    num_tables += 1;
+    return table_id;
 }
 
 init();
