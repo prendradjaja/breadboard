@@ -1,0 +1,5 @@
+A framework for creating in-browser turn-based 2-player games.
+
+Plug in a UI and a game.js, and it (hopefully) works!
+
+More later.
