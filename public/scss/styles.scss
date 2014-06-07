@@ -1,30 +1,103 @@
+// console
+
 #connecting {
-    font-family: monospace;
+  font-family: monospace;
 }
 
-// #console {
-//     display: none;
-// }
+#console {
+  // display: none;
+}
 
 #console-out {
-    height:12em;
-    width:300px;
-    font-family: monospace;
-    font-size:12px;
-    overflow-y:scroll;
-    border:black solid 1px;
-    padding-left: 1px;
-    margin: 0px;
-    -moz-box-sizing: border-box;
+  height:12em;
+  width:300px;
+  font-family: monospace;
+  font-size:12px;
+  overflow-y:scroll;
+  border:black solid 1px;
+  padding-left: 1px;
+  margin: 0px;
+  -moz-box-sizing: border-box;
 }
 
 #console-in {
-    width:300px;
-    font-family: monospace;
-    font-size:12px;
-    padding:0;
-    padding-left: 1px;
-    margin:0;
-    border:black solid 1px;
-    border-top: none;
+  width:300px;
+  font-family: monospace;
+  font-size:12px;
+  padding:0;
+  padding-left: 1px;
+  margin:0;
+  border:black solid 1px;
+  border-top: none;
+}
+
+// gui
+
+$cell-size: 100px;
+$cell-margin: 2px;
+
+.game-wrap {
+  display: none;
+  text-align: center;
+}
+
+.board {
+  width: 3*$cell-size + 4*$cell-margin;
+  display: inline-block;
+  background: blue;
+}
+
+.board-row {
+  border-top: $cell-margin black solid;
+  border-bottom: $cell-margin black solid;
+  display: inline-block;
+  float:left;
+}
+
+.board-row:first-child {
+  border-top: none;
+}
+
+.board-row:last-child {
+  border-bottom: none;
+}
+
+.board-cell {
+  background: white;
+  height: $cell-size;
+  width: $cell-size;
+  border-left: $cell-margin black solid;
+  border-right: $cell-margin black solid;
+  float:left;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  font-size: $cell-size*0.85;
+  font-family: Courier;
+  cursor: default;
+}
+
+.board-cell.empty {
+  cursor: pointer;
+  &:hover {
+    background: #eeeeee;
+  }
+}
+
+.board-cell:first-child {
+  border-left: none;
+}
+
+.board-cell:last-child {
+  border-right: none;
+}
+
+.board-cell.x:after {
+  content: "X";
+  color: blue;
+}
+
+.board-cell.o:after {
+  content: "O";
+  color: red;
 }

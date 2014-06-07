@@ -7,10 +7,29 @@
         <link rel='stylesheet' href='css/styles.css' type='text/css'/>
     </head>
     <body>
-        <!-- <div id='connecting'>Connecting...</div> -->
+        <div id='connecting'>Connecting...</div>
         <div id='console'>
             <pre id='console-out'></pre>
             <input id='console-in' autofocus> <!-- Autofocus is not universal... -->
+        </div>
+        <div class="game-wrap">
+            <div class="board">
+                <div class="board-row">
+                    <div class="board-cell empty" id="cell-0-0"></div>
+                    <div class="board-cell empty" id="cell-0-1"></div>
+                    <div class="board-cell empty" id="cell-0-2"></div>
+                </div>
+                <div class="board-row">
+                    <div class="board-cell empty" id="cell-1-0"></div>
+                    <div class="board-cell empty" id="cell-1-1"></div>
+                    <div class="board-cell empty" id="cell-1-2"></div>
+                </div>
+                <div class="board-row">
+                    <div class="board-cell empty" id="cell-2-0"></div>
+                    <div class="board-cell empty" id="cell-2-1"></div>
+                    <div class="board-cell empty" id="cell-2-2"></div>
+                </div>
+            </div>
         </div>
         <script src="js/console.js"></script>
         <script src="js/game.js"></script>
